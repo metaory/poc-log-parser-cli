@@ -1,4 +1,6 @@
 # Ignore generated directories
+errors.json
+
 dist/
 exec/
 
