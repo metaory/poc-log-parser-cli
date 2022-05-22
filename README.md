@@ -25,7 +25,7 @@ Your application will be installable from `npm` or by sharing your native execut
 
 Runs the CLI application.
 
-You can pass arguments to your application by running `npm run dev -- --your-argument`. The extra `--` is so that your arguments are passed to your CLI application, and not `npm`.
+`npm run dev --input ./data/raw --output ./errors.json`
 
 ### **clean**
 
@@ -54,3 +54,4 @@ Cleans, then builds, and tests the built code.
 Cleans, then builds, then bundles into native executables for Windows, Mac, and Linux.
 
 Your shareable executables will be in the `./exec/` directory.
+`./exec/getmayd-log-parser-cli-linux --input ./data/raw --output errors.json`

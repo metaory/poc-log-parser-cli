@@ -1,7 +1,14 @@
 import { stat, readFile } from 'fs/promises'
 import test from 'ava'
 
-import { init } from './index'
+import { processLog } from './index'
+
+interface LogItem {
+  timestamp: number
+  loglevel: string
+  transactionId: string
+  details: string
+}
 
 const input = './data/raw'
 const output = './errors.json'
@@ -10,7 +17,11 @@ const readJson = async (path) => JSON.parse(await readFile(path, { encoding: 'ut
 
 test.before(async t => {
   console.log('Starting tests!')
-  await init({ input, output })
+})
+
+test.serial('parser is successful', async t => {
+  await processLog({ input, output })
+  t.pass()
 })
 
 test.serial('output file exists', async t => {
@@ -24,10 +35,10 @@ test.serial('output file is JSON', async t => {
 
 test.serial('all loglevels are error', async t => {
   const outputFile = await readJson(output)
-  t.true(outputFile.every(x => x.loglevel === 'error'))
+  t.true(outputFile.every((x : LogItem): boolean => x.loglevel === 'error'))
 })
 
-test.serial('timestamp is epoch', async t => {
+test.serial('timestamp is number', async t => {
   const outputFile = await readJson(output)
-  t.true(outputFile.every(x => typeof x.timestamp === 'number'))
+  t.true(outputFile.every((x : LogItem): boolean => typeof x.timestamp === 'number'))
 })

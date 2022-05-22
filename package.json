@@ -1,7 +1,7 @@
 {
   "name": "getmayd-log-parser-cli",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Log Parser",
   "author": "Pou Yan <metaory@gmail.com>",
   "license": "MIT",

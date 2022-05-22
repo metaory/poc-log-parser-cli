@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-const program = new Command()
+import { processLog } from './index'
 
-import { init } from './index'
+const program = new Command()
 
 program
   .version('0.1.0')
-  .option('-i, --input <path>', 'Input file path')
-  .option('-o, --output <path>', 'Output file path')
+  .requiredOption('-i, --input <path>', 'Input file path')
+  .requiredOption('-o, --output <path>', 'Output file path')
   .parse(process.argv)
 
-init({
+processLog({
   input: program.opts().input,
   output: program.opts().output,
 })
-  .then(console.log)
+  .then(() => console.log(program.opts().output, 'written successfully.'))
   .catch(console.error)

@@ -5,13 +5,13 @@ export interface Options {
   output: string
 }
 
-interface JsonMessage {
+interface LogBody {
   transactionId: string
   details: string
 }
 
-const parseJson = (arr: string[] = []): JsonMessage => {
-  let obj: JsonMessage
+const parseLogBody = (arr: string[] = []): LogBody => {
+  let obj: LogBody
   try {
     obj = JSON.parse(arr.join(' ').trim())
   }
@@ -19,22 +19,22 @@ const parseJson = (arr: string[] = []): JsonMessage => {
     obj = { transactionId: 'NA', details: 'NA' }
   }
   finally {
-    const { transactionId, details } = obj
-    return { transactionId, details }
+    return obj
   }
 }
 
 const parseEpoch = (date: string): number => new Date(date).getTime()
 
-export async function init(options: Options): Promise<void> {
+export async function processLog(options: Options): Promise<void> {
   const file = await readFile(options.input, { encoding: 'utf8' })
+
   const output = file
-    .split(/\r?\n/)
-    .filter(line => !!line)
-    .map(line => {
+    .split(/\r?\n/) // break into lines
+    .filter(line => !!line) // filter empty lines
+    .map(line => { // map each line
       const [datetime, , loglevel, , ...arr] = line.split(' ')
 
-      const { transactionId, details } = parseJson(arr)
+      const { transactionId, details } = parseLogBody(arr)
       const timestamp = parseEpoch(datetime)
 
       return {
@@ -44,12 +44,8 @@ export async function init(options: Options): Promise<void> {
         details
       }
     })
-    .filter(({ loglevel }) => loglevel === 'error')
+    .filter(({ loglevel }) => loglevel === 'error') // filter errors
 
   await writeFile(options.output, JSON.stringify(output, null, 2))
 }
 
-//
-//
-//
-// export async function init(options: Options): Promise<{ message: string }> {
