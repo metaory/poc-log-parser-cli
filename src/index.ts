@@ -44,4 +44,3 @@ export async function processLog(options: Options): Promise<void> {
 
   await writeFile(options.output, JSON.stringify(output, null, 2))
 }
-
