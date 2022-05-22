@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'fs/promises';
 
-export interface Options {
+interface Options {
   input: string
   output: string
 }
