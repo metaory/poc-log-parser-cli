@@ -33,6 +33,8 @@ Cleans, then builds the TypeScript code.
 
 Your built code will be in the `./dist/` directory.
 
+`node dist/cli.js --input ./data/raw --output ./errors.json`
+
 ### **test**
 
 `npm run test`
@@ -46,4 +48,5 @@ Cleans, then builds, and tests the built code.
 Cleans, then builds, then bundles into native executables for Windows, Mac, and Linux.
 
 Your shareable executables will be in the `./exec/` directory.
+
 `./exec/getmayd-log-parser-cli-linux --input ./data/raw --output errors.json`
