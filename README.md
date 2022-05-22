@@ -1,13 +1,5 @@
 # getmayd-log-parser-cli 
 
-![GitHub package.json dynamic](https://img.shields.io/github/package-json/keywords/metaory/getmayd-log-parser-cli.svg?style=flat-square)
-
-![GitHub](https://img.shields.io/github/license/metaory/getmayd-log-parser-cli.svg?style=flat-square)
-![GitHub package.json version](https://img.shields.io/github/package-json/v/metaory/getmayd-log-parser-cli.svg?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/metaory/getmayd-log-parser-cli.svg?style=flat-square)
-
-![GitHub last commit](https://img.shields.io/github/last-commit/metaory/getmayd-log-parser-cli.svg?style=flat-square)
-
 Includes:
 
 - [TypeScript](https://www.typescriptlang.org/), for writing good code
