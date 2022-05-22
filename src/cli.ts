@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
-import { processLog } from './index'
+import { Parser } from './index'
 
 const program = new Command()
 
@@ -13,10 +13,12 @@ program
   .requiredOption('-o, --output <path>', 'Output file path')
   .parse(process.argv)
 
-processLog({
+const parser = new Parser({
   input: program.opts().input,
   output: program.opts().output,
 })
+
+parser.process()
   .then(() => console.log(program.opts().output, 'written successfully.'))
   .catch(console.error)
   .finally(() => console.timeEnd('Time Took'))
