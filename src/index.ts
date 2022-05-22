@@ -26,21 +26,23 @@ const parseLogBody = (arr: string[] = []): LogBody => {
   }
 }
 
+const generate = (file: string): LogBody[] => file
+  .split(/\r?\n/) // break into lines
+  .filter((line): boolean => !!line) // filter empty lines
+  .map((line): LogItem => { // map each line
+    const [datetime, , loglevel, , ...arr] = line.split(' ')
+
+    const timestamp = parseEpoch(datetime)
+    const { transactionId, details } = parseLogBody(arr)
+
+    return { timestamp, loglevel, transactionId, details }
+  })
+  .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
+
 export async function processLog(options: Options): Promise<void> {
   const file = await readFile(options.input, { encoding: 'utf8' })
 
-  const output = file
-    .split(/\r?\n/) // break into lines
-    .filter((line): boolean => !!line) // filter empty lines
-    .map((line): LogItem => { // map each line
-      const [datetime, , loglevel, , ...arr] = line.split(' ')
-
-      const timestamp = parseEpoch(datetime)
-      const { transactionId, details } = parseLogBody(arr)
-
-      return { timestamp, loglevel, transactionId, details }
-    })
-    .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
+  const output = generate(file)
 
   await writeFile(options.output, JSON.stringify(output, null, 2))
 }
