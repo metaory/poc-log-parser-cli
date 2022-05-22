@@ -10,6 +10,11 @@ interface LogBody {
   details: string
 }
 
+interface LogItem extends LogBody {
+  timestamp: number
+  loglevel: string
+}
+
 const parseLogBody = (arr: string[] = []): LogBody => {
   let obj: LogBody
   try {
@@ -30,8 +35,8 @@ export async function processLog(options: Options): Promise<void> {
 
   const output = file
     .split(/\r?\n/) // break into lines
-    .filter(line => !!line) // filter empty lines
-    .map(line => { // map each line
+    .filter((line): boolean => !!line) // filter empty lines
+    .map((line): LogItem => { // map each line
       const [datetime, , loglevel, , ...arr] = line.split(' ')
 
       const { transactionId, details } = parseLogBody(arr)
@@ -44,7 +49,7 @@ export async function processLog(options: Options): Promise<void> {
         details
       }
     })
-    .filter(({ loglevel }) => loglevel === 'error') // filter errors
+    .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
 
   await writeFile(options.output, JSON.stringify(output, null, 2))
 }
