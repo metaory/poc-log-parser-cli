@@ -15,6 +15,8 @@ export interface LogItem extends LogBody {
   loglevel: string
 }
 
+const parseEpoch = (date: string): number => new Date(date).getTime()
+
 const parseLogBody = (arr: string[] = []): LogBody => {
   try {
     return JSON.parse(arr.join(' ').trim())
@@ -23,8 +25,6 @@ const parseLogBody = (arr: string[] = []): LogBody => {
     return { transactionId: 'NA', details: 'NA' }
   }
 }
-
-const parseEpoch = (date: string): number => new Date(date).getTime()
 
 export async function processLog(options: Options): Promise<void> {
   const file = await readFile(options.input, { encoding: 'utf8' })
@@ -35,8 +35,8 @@ export async function processLog(options: Options): Promise<void> {
     .map((line): LogItem => { // map each line
       const [datetime, , loglevel, , ...arr] = line.split(' ')
 
-      const { transactionId, details } = parseLogBody(arr)
       const timestamp = parseEpoch(datetime)
+      const { transactionId, details } = parseLogBody(arr)
 
       return { timestamp, loglevel, transactionId, details }
     })
