@@ -1,21 +1,14 @@
 import { stat, readFile } from 'fs/promises'
 import test from 'ava'
 
-import { processLog } from './index'
-
-interface LogItem {
-  timestamp: number
-  loglevel: string
-  transactionId: string
-  details: string
-}
+import { LogItem, processLog } from './index'
 
 const input = './data/raw'
 const output = './errors.json'
 
-const readJson = async (path) => JSON.parse(await readFile(path, { encoding: 'utf8' }))
+const readJson = async (path: string) => JSON.parse(await readFile(path, { encoding: 'utf8' }))
 
-test.before(async t => {
+test.before(async () => {
   console.log('Starting tests!')
 })
 

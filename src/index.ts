@@ -10,7 +10,7 @@ interface LogBody {
   details: string
 }
 
-interface LogItem extends LogBody {
+export interface LogItem extends LogBody {
   timestamp: number
   loglevel: string
 }
