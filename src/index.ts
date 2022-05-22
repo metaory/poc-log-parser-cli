@@ -16,15 +16,11 @@ export interface LogItem extends LogBody {
 }
 
 const parseLogBody = (arr: string[] = []): LogBody => {
-  let obj: LogBody
   try {
-    obj = JSON.parse(arr.join(' ').trim())
+    return JSON.parse(arr.join(' ').trim())
   }
   catch {
-    obj = { transactionId: 'NA', details: 'NA' }
-  }
-  finally {
-    return obj
+    return { transactionId: 'NA', details: 'NA' }
   }
 }
 

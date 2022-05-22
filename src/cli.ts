@@ -5,6 +5,8 @@ import { processLog } from './index'
 
 const program = new Command()
 
+console.time('Time Took')
+
 program
   .version('0.1.0')
   .requiredOption('-i, --input <path>', 'Input file path')
@@ -17,3 +19,4 @@ processLog({
 })
   .then(() => console.log(program.opts().output, 'written successfully.'))
   .catch(console.error)
+  .finally(() => console.timeEnd('Time Took'))
