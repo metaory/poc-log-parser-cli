@@ -19,6 +19,6 @@ const parser = new Parser({
 })
 
 parser.process()
-  .then(() => console.log(program.opts().output, 'written successfully.'))
+  .then(() => console.log(parser.output, 'written successfully.'))
   .catch(console.error)
   .finally(() => console.timeEnd('Time Took'))
