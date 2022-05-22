@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises'
 
 interface Options {
   input: string
@@ -16,12 +16,12 @@ export interface LogItem extends LogBody {
 }
 
 export class Parser {
-  public input: string;
-  public output: string;
+  public input: string
+  public output: string
 
   constructor(options: Options) {
-    this.input = options.input;
-    this.output = options.output;
+    this.input = options.input
+    this.output = options.output
   }
 
   private parseEpoch(date: string): number {
