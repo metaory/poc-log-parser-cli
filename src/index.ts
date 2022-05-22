@@ -42,12 +42,7 @@ export async function processLog(options: Options): Promise<void> {
       const { transactionId, details } = parseLogBody(arr)
       const timestamp = parseEpoch(datetime)
 
-      return {
-        timestamp,
-        loglevel,
-        transactionId,
-        details
-      }
+      return { timestamp, loglevel, transactionId, details }
     })
     .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
 
