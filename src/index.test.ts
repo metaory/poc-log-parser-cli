@@ -4,7 +4,7 @@ import test from 'ava'
 import { LogItem, Parser } from './index'
 
 const parser = new Parser({
-  input: './data/raw',
+  input: './data/sample',
   output: './errors.json'
 })
 
