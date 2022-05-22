@@ -16,19 +16,19 @@ export interface LogItem extends LogBody {
 }
 
 export class Parser {
-  input: string;
-  output: string;
+  public input: string;
+  public output: string;
 
   constructor(options: Options) {
     this.input = options.input;
     this.output = options.output;
   }
 
-  parseEpoch(date: string): number {
+  private parseEpoch(date: string): number {
     return new Date(date).getTime()
   }
 
-  parseLogBody(arr: string[] = []): LogBody {
+  private parseLogBody(arr: string[] = []): LogBody {
     try {
       return JSON.parse(arr.join(' ').trim())
     }
@@ -37,7 +37,7 @@ export class Parser {
     }
   }
 
-  generate(file: string): LogItem[] {
+  private generate(file: string): LogItem[] {
     return file
       .split(/\r?\n/) // break into lines
       .filter((line): boolean => !!line) // filter empty lines
@@ -52,7 +52,7 @@ export class Parser {
       .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
   }
 
-  async process(): Promise<void> {
+  public async process(): Promise<void> {
     const file = await readFile(this.input, { encoding: 'utf8' })
 
     const output = this.generate(file)
