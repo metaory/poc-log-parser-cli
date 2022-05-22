@@ -15,32 +15,49 @@ export interface LogItem extends LogBody {
   loglevel: string
 }
 
-const parseEpoch = (date: string): number => new Date(date).getTime()
+export class Parser {
+  input: string;
+  output: string;
 
-const parseLogBody = (arr: string[] = []): LogBody => {
-  try {
-    return JSON.parse(arr.join(' ').trim())
+  constructor(options: Options) {
+    this.input = options.input;
+    this.output = options.output;
   }
-  catch {
-    return { transactionId: 'NA', details: 'NA' }
+
+  parseEpoch(date: string): number {
+    return new Date(date).getTime()
+  }
+
+  parseLogBody(arr: string[] = []): LogBody {
+    try {
+      return JSON.parse(arr.join(' ').trim())
+    }
+    catch {
+      return { transactionId: 'NA', details: 'NA' }
+    }
+  }
+
+  generate(file: string): LogItem[] {
+    return file
+      .split(/\r?\n/) // break into lines
+      .filter((line): boolean => !!line) // filter empty lines
+      .map((line): LogItem => { // map each line
+        const [datetime, , loglevel, , ...arr] = line.split(' ')
+
+        const timestamp = this.parseEpoch(datetime)
+        const { transactionId, details } = this.parseLogBody(arr)
+
+        return { timestamp, loglevel, transactionId, details }
+      })
+      .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
+  }
+
+  async process(): Promise<void> {
+    const file = await readFile(this.input, { encoding: 'utf8' })
+
+    const output = this.generate(file)
+
+    await writeFile(this.output, JSON.stringify(output, null, 2))
   }
 }
 
-export async function processLog(options: Options): Promise<void> {
-  const file = await readFile(options.input, { encoding: 'utf8' })
-
-  const output = file
-    .split(/\r?\n/) // break into lines
-    .filter((line): boolean => !!line) // filter empty lines
-    .map((line): LogItem => { // map each line
-      const [datetime, , loglevel, , ...arr] = line.split(' ')
-
-      const timestamp = parseEpoch(datetime)
-      const { transactionId, details } = parseLogBody(arr)
-
-      return { timestamp, loglevel, transactionId, details }
-    })
-    .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
-
-  await writeFile(options.output, JSON.stringify(output, null, 2))
-}

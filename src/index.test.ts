@@ -1,10 +1,11 @@
 import { stat, readFile } from 'fs/promises'
 import test from 'ava'
 
-import { LogItem, processLog } from './index'
+import { LogItem, Parser } from './index'
 
 const input = './data/raw'
 const output = './errors.json'
+const parser = new Parser({ input, output })
 
 const readJson = async (path: string) => JSON.parse(await readFile(path, { encoding: 'utf8' }))
 
@@ -13,7 +14,7 @@ test.before(async () => {
 })
 
 test.serial('parser is successful', async t => {
-  await processLog({ input, output })
+  await parser.process()
   t.pass()
 })
 
