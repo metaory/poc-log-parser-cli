@@ -7,8 +7,6 @@ Includes:
 - [Commander](https://www.npmjs.com/package/commander), for building CLI applications
 - [Pkg](https://www.npmjs.com/package/pkg), for building cross-platform native executables
 
-Your application will be installable from `npm` or by sharing your native executables.
-
 ## Usage
 
 ### **dev**
