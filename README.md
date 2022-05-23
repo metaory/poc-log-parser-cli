@@ -17,7 +17,7 @@ Includes:
 
 Runs the CLI application.
 
-`npm run dev --input ./data/raw --output ./errors.json`
+`npm run dev --input ./data/sample --output ./errors.json`
 
 ### **clean**
 
@@ -35,7 +35,7 @@ Cleans, then builds the TypeScript code.
 
 Your built code will be in the `./dist/` directory.
 
-`node dist/cli.js --input ./data/raw --output ./errors.json`
+`node dist/cli.js --input ./data/sample --output ./errors.json`
 
 ### **test**
 
@@ -51,4 +51,4 @@ Cleans, then builds, then bundles into native executables for Windows, Mac, and 
 
 Your shareable executables will be in the `./exec/` directory.
 
-`./exec/getmayd-log-parser-cli-linux --input ./data/raw --output errors.json`
+`./exec/getmayd-log-parser-cli-linux --input ./data/sample --output errors.json`
