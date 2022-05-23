@@ -9,6 +9,8 @@ Includes:
 
 ## Usage
 
+`parser --input <path> --output <path>`
+
 ### **dev**
 
 `npm run dev`
@@ -26,6 +28,8 @@ Removes any built code and any built executables.
 ### **build**
 
 `npm run build`
+
+`node dist/cli.js --input ./data/sample --output ./errors.json`
 
 Cleans, then builds the TypeScript code.
 
