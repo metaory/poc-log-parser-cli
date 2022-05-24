@@ -4,8 +4,8 @@ import test from 'ava'
 import { LogItem, Parser } from './index'
 
 const parser = new Parser({
-  input: './data/sample',
-  output: './errors.json'
+  inputPath: './data/sample',
+  outputPath: './errors.json'
 })
 
 const readJson = async (path: string) => JSON.parse(await readFile(path, { encoding: 'utf8' }))
@@ -20,20 +20,20 @@ test.serial('parser is successful', async t => {
 })
 
 test.serial('output file exists', async t => {
-  t.truthy(await stat(parser.output))
+  t.truthy(await stat(parser.outputPath))
 })
 
 test.serial('output file is JSON', async t => {
-  const outputFile = await readJson(parser.output)
+  const outputFile = await readJson(parser.outputPath)
   t.true(typeof outputFile === 'object')
 })
 
 test.serial('all loglevels are error', async t => {
-  const outputFile = await readJson(parser.output)
+  const outputFile = await readJson(parser.outputPath)
   t.true(outputFile.every((x: LogItem): boolean => x.loglevel === 'error'))
 })
 
 test.serial('timestamp is number', async t => {
-  const outputFile = await readJson(parser.output)
+  const outputFile = await readJson(parser.outputPath)
   t.true(outputFile.every((x: LogItem): boolean => typeof x.timestamp === 'number'))
 })

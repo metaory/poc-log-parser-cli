@@ -14,11 +14,11 @@ program
   .parse(process.argv)
 
 const parser = new Parser({
-  input: program.opts().input,
-  output: program.opts().output,
+  inputPath: program.opts().input,
+  outputPath: program.opts().output,
 })
 
 parser.process()
-  .then(() => console.log(parser.output, 'written successfully.'))
+  .then(() => console.log(parser.outputPath, 'written successfully.'))
   .catch(console.error)
   .finally(() => console.timeEnd('Time Took'))

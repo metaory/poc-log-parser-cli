@@ -1,8 +1,8 @@
 import { readFile, writeFile } from 'fs/promises'
 
 interface Options {
-  input: string
-  output: string
+  inputPath: string
+  outputPath: string
 }
 
 interface LogBody {
@@ -16,12 +16,12 @@ export interface LogItem extends LogBody {
 }
 
 export class Parser {
-  public input: string
-  public output: string
+  public inputPath: string
+  public outputPath: string
 
   constructor(options: Options) {
-    this.input = options.input
-    this.output = options.output
+    this.inputPath = options.inputPath
+    this.outputPath = options.outputPath
   }
 
   private parseEpoch(date: string): number {
@@ -61,11 +61,11 @@ export class Parser {
   }
 
   public async process(): Promise<void> {
-    const file = await this.readFile(this.input)
+    const file = await this.readFile(this.inputPath)
 
     const output = this.generate(file)
 
-    await this.writeLogFile(this.output, output)
+    await this.writeLogFile(this.outputPath, output)
   }
 }
 
