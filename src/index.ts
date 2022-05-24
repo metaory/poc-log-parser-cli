@@ -52,12 +52,20 @@ export class Parser {
       .filter(({ loglevel }): boolean => loglevel === 'error') // filter errors
   }
 
+  private readFile(path: string): Promise<string> {
+    return readFile(path, { encoding: 'utf8' })
+  }
+
+  private writeFile(path: string, data: LogItem[]): Promise<void> {
+    return writeFile(path, JSON.stringify(data, null, 2))
+  }
+
   public async process(): Promise<void> {
-    const file = await readFile(this.input, { encoding: 'utf8' })
+    const file = await this.readFile(this.input)
 
     const output = this.generate(file)
 
-    await writeFile(this.output, JSON.stringify(output, null, 2))
+    await this.writeFile(this.output, output)
   }
 }
 
