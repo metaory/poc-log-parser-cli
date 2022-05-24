@@ -56,7 +56,7 @@ export class Parser {
     return readFile(path, { encoding: 'utf8' })
   }
 
-  private writeFile(path: string, data: LogItem[]): Promise<void> {
+  private writeLogFile(path: string, data: LogItem[]): Promise<void> {
     return writeFile(path, JSON.stringify(data, null, 2))
   }
 
@@ -65,7 +65,7 @@ export class Parser {
 
     const output = this.generate(file)
 
-    await this.writeFile(this.output, output)
+    await this.writeLogFile(this.output, output)
   }
 }
 
