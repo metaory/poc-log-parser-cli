@@ -60,6 +60,11 @@ export class Parser {
     return writeFile(path, JSON.stringify(data, null, 2))
   }
 
+  public async readJsonFile(path: string): Promise<object[]> {
+    const fileString = await this.readFile(path)
+    return JSON.parse(fileString)
+  }
+
   public async process(): Promise<void> {
     const file = await this.readFile(this.inputPath)
 

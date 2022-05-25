@@ -8,8 +8,6 @@ const parser = new Parser({
   outputPath: './errors.json'
 })
 
-const readJson = async (path: string) => JSON.parse(await readFile(path, { encoding: 'utf8' }))
-
 test.before(async () => {
   console.log('Starting tests!')
 })
@@ -24,16 +22,16 @@ test.serial('output file exists', async t => {
 })
 
 test.serial('output file is JSON', async t => {
-  const outputFile = await readJson(parser.outputPath)
+  const outputFile = await parser.readJsonFile(parser.outputPath)
   t.true(typeof outputFile === 'object')
 })
 
 test.serial('all loglevels are error', async t => {
-  const outputFile = await readJson(parser.outputPath)
+  const outputFile = await parser.readJsonFile(parser.outputPath)
   t.true(outputFile.every((x: LogItem): boolean => x.loglevel === 'error'))
 })
 
 test.serial('timestamp is number', async t => {
-  const outputFile = await readJson(parser.outputPath)
+  const outputFile = await parser.readJsonFile(parser.outputPath)
   t.true(outputFile.every((x: LogItem): boolean => typeof x.timestamp === 'number'))
 })
