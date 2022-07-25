@@ -1,4 +1,4 @@
-# getmayd-log-parser-cli 
+# poc-log-parser-cli 
 
 Includes:
 
